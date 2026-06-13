@@ -92,7 +92,10 @@ export function parseFrontmatter(raw: string): FrontmatterResult {
 
 export function isCollectionGuideFile(path: string): boolean {
   const fileName = path.split('/').pop() ?? '';
-  return fileName.startsWith('PUT_') && fileName.endsWith('_HERE.md');
+  return (
+    (fileName.startsWith('PUT_') && fileName.endsWith('_HERE.md')) ||
+    fileName.toLowerCase() === 'readme.md'
+  );
 }
 
 // ============================================================

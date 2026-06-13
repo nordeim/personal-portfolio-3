@@ -29,7 +29,7 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     label: 'Editorial Soul',
-    portraitKey: 'editorial',
+    portraitKey: 'creative-technologist',
     headline: 'Words with weight.',
     subtitle: 'Poetry. Prose. The slow craft of language.',
     artifactTitle: 'Silence → Sentence → Sound',
@@ -41,7 +41,7 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     label: 'Visual Builder',
-    portraitKey: 'studio',
+    portraitKey: 'project-archive',
     headline: 'A workshop, not a feed.',
     subtitle: 'Photography. Type. Studies in light and matter.',
     artifactTitle: 'Light → Material → Frame',

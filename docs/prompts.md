@@ -36,6 +36,14 @@ please meticulously plan to do a careful code review and audit to check for alig
 
 ---
 
+your last tool call failed. check the tool calling format and method, then try again and continue meticulously
+
+---
+
+your last tool call failed. check the tool calling format and method, then try again and continue meticulously.
+
+---
+
 please meticulously plan to provide an awesome one line caption that describes the project current state. goal is to provide a project GitHub repo description.
 
 ---
