@@ -60,12 +60,13 @@ Follow this workflow for all implementation tasks:
 | `pnpm build` | Production build (compiles TS + Vite) |
 | `pnpm typecheck` | **Mandatory** strict type check before any change |
 | `pnpm preview` | Preview production build |
+| `node scripts/verify-content.test.js` | TDD content ingestion audit |
 
 ### File Organization
-- `/src/components`: UI primitives and installations.
-- `/src/hooks`: Interaction logic and system state.
+- `/src/components`: UI primitives and installations (16 files).
+- `/src/hooks`: Interaction logic and system state (3 files).
 - `/src/lib`: Data structures, types, and ingestion (`import.meta.glob`).
-- `/src/content`: Markdown sources and assets.
+- `/src/content`: Markdown sources and assets (all content inside `collections/` or `portfolio/`).
 - `/src/styles`: Design system and global CSS.
 
 ---
@@ -77,12 +78,31 @@ Uses custom hash-based routing (`#collection/slug`, `#portfolio/slug`) via `useR
 
 ### Content Ingestion
 Content is ingested via `import.meta.glob` in `src/lib/content.ts`. To add content:
-1. Place `.md` files in `src/content/`.
+1. Place `.md` files in `src/content/collections/[slug]/` or `src/content/portfolio/`.
 2. Ensure sibling images match the filename (e.g., `work.md` + `work.jpg`).
+3. Run `node scripts/verify-content.test.js` to verify ingestion integrity.
+
+**⚠️ Critical**: `import.meta.glob` paths are **relative to the calling file** (`src/lib/content.ts`). Paths must be `../content/...` (not `./content/...`). Content placed outside `collections/` or `portfolio/` at the `src/content/` root is **completely orphaned** and will never be ingested.
 
 ### Anti-Patterns to Avoid
 - **Shadows**: Avoid soft, blurry shadows; use hard offsets or borders.
 - **Radii**: Never use `rounded-sm`, `md`, `lg`, or `full`.
 - **Libraries**: Do not add UI libraries (shadcn, Radix, Framer) for simple effects.
+
+---
+
+## Lessons Learned (Post-Remediation)
+
+### Content Ingestion Path
+The `import.meta.glob` call in `src/lib/content.ts` is **relative to the file that calls it** (`src/lib/content.ts`), not the project root. A path like `./content/...` (relative to `src/lib/`) would point to `src/lib/content/` (which does not exist), whereas `../content/...` correctly points to `src/content/`. This is a classic subtlety in Vite's glob semantics. We added a TDD test (`scripts/verify-content.test.js`) to catch content that falls through the cracks.
+
+### Portrait Key ↔ Directory Name
+The `heroSlides` in `src/lib/data.ts` map `portraitKey` to `src/content/portrait/[key]/`. If a directory does not match the key exactly, the site falls back to a "NY" text placeholder — which is a clear visual regression. Always run `node scripts/verify-content.test.js` after modifying `heroSlides` or the `portrait/` directory.
+
+### `PUT_*_HERE.md` and `README.md` Filtering
+`isCollectionGuideFile()` in `src/lib/content.ts` originally only filtered placeholder files (`PUT_*_HERE.md`), but `README.md` files placed in content directories for documentation were also being ingested. We extended the filter to include `README.md` (case-insensitive) to prevent these guide files from appearing as collection items.
+
+### Top-Level Content Orphaning
+When adding new content, it's a common mistake to create a directory like `src/content/[category]/` (e.g., `src/content/photography/`) rather than placing it in `src/content/collections/`. Our remediation moved these files, but it's a pattern to watch — multiple levels of nesting (`src/content/artworks/`) might look like the right place but are structurally wrong for the current `import.meta.glob` setup.
 
 *"Engineering the soul, one pixel at a time."*

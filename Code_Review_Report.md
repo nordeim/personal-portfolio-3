@@ -787,4 +787,108 @@ Remaining Notes
 3.  public/nicholas-portrait.jpg — This is an SVG-in-JPEG file (3,366 bytes). Still a placeholder, but getPortraitForKey() fallbacks handle content gracefully.
 4.  PUT_*_HERE.md guide files — Still present in all collection directories. Filtered by isCollectionGuideFile(), so they don't render.
 
+# Run final verification suite
+$ echo "Final verification:" && pnpm typecheck 2>&1 && echo "Typecheck: PASS" && pnpm build 2>&1 | tail -5 && echo "Build: PASS" && node scripts/verify-content.test.js 2>&1 | tail -5
+Final verification:
+$ tsc -b --noEmit
+Typecheck: PASS
+dist/assets/open-to-collaborate-Dak15ro-.jpg    1,206.85 kB
+dist/assets/maudie-house-on-fire-C7gYPHYQ.pdf   1,901.35 kB
+dist/assets/index-BLuBG5R9.css                     38.60 kB │ gzip:  8.23 kB
+dist/assets/index-0PMarwMS.js                     260.57 kB │ gzip: 79.32 kB
+✓ built in 2.02s
+Build: PASS
+  ✅ PASS: Collection 'stories' -> directory exists
+…
+Click to expand
+All verification passes. Let me provide the final delivery summary in a clean format.         All verifications pass. Typecheck, build, and TDD test all green. Here's the complete delivery:
+🎉 Remediation Complete — Final Delivery
+What Was Fixed (TDD: RED → GREEN)
+Initial RED state: 7 failures — orphaned content, portrait key mismatches, missing collections.  
+Final GREEN state: All TDD checks pass, pnpm typecheck clean, pnpm build successful.
+Changes Summary
+1. Content Reorganization (10 orphaned files → collections/)
+Moved From	To Collection	Files
+src/content/artworks/	collections/artworks/	still-life-with-grid.md
+src/content/code/	collections/code/	marginalia.md, typeset-engine.md
+src/content/design/	collections/design/	poster-no-04.md
+src/content/photography/	collections/photography/	room-tones.md
+src/content/poetry/	collections/poetry/	small-instrument.md, the-weight-of-a-room.md
+src/content/stories/	collections/stories/	field-notes.md
+src/content/web-experiments/	collections/web-experiments/	grain-field.md, the-quiet-protocol.md
+Plus: collections/experiments/ → merged into collections/web-experiments/
+2. Portrait Key Fix (src/lib/data.ts)
+Slide	portraitKey Before	portraitKey After	Matches Directory?
+1 — Creative Technologist	nicholas-yun	(unchanged)	✅
+2 — Editorial Soul	editorial	creative-technologist	✅
+3 — Visual Builder	studio	project-archive	✅
+3. isCollectionGuideFile() Extension (src/lib/content.ts)
+Now also filters README.md alongside PUT_*_HERE.md guide files.
+Final Verification
+Check	Result
+TDD content test	✅ GREEN — all checks pass
+pnpm typecheck	✅ 0 errors
+pnpm build	✅ 99 modules, 260KB JS, 38KB CSS
+Content Now Ingested
+Category	Count
+Collection items	20
+Portfolio items	14
+Portrait images	4
+PDF documents	1
+Outstanding Notes (non-blocking)
+1.  open-to-collaborate/ portrait directory — Extra directory not used by any hero slide (harmless, available for future use).
+2.  example.com URLs — Still present in social links and some content frontmatter (user should replace with real URLs before launch).
+3.  public/nicholas-portrait.jpg — SVG-in-JPEG placeholder (3,366 bytes). getPortraitForKey() fallback handles this gracefully.
+
+---
+
+All three documentation files have been updated. Let me now run a final typecheck and build to ensure the changes don't break anything, and then provide a comprehensive summary of what was updated.   Now let me run a final typecheck and build to ensure all changes are clean, then provide the complete delivery summary.
+# Final TypeScript typecheck
+$ pnpm typecheck 2>&1
+$ tsc -b --noEmit
+# Final production build
+$ pnpm build 2>&1 | tail -10
+computing gzip size...
+dist/index.html                                     1.18 kB │ gzip:  0.61 kB
+dist/assets/creative-technologist-DGsTbdkW.jpg    271.65 kB
+dist/assets/nicholas-0--W2dqedH.webp              329.89 kB
+dist/assets/project-archive-BsjfgILC.jpg          426.50 kB
+dist/assets/open-to-collaborate-Dak15ro-.jpg    1,206.85 kB
+dist/assets/maudie-house-on-fire-C7gYPHYQ.pdf   1,901.35 kB
+dist/assets/index-BLuBG5R9.css                     38.60 kB │ gzip:  8.23 kB
+dist/assets/index-0PMarwMS.js                     260.57 kB │ gzip: 79.32 kB
+✓ built in 1.89s
+Both typecheck and build pass cleanly. Let me now provide the comprehensive delivery summary of all the documentation updates.  
+🎉 Documentation Update Complete
+What Was Updated
+File	Changes	Status
+README.md	Updated file hierarchy (16 components), added Content Management section with constraints, added Troubleshooting section, clarified content locationtodo location rules	✅ Updated
+AGENTS.md	Added verify-content.test.js command, added comprehensive "Lessons Learned" section with 3 key gotchas (content ingestion, portrait keys, collection sync), maintained all original warnings	✅ Updated
+CLAUDE.md	Added verify-content.test.js to build commands, added Lessons Learned section with 4 detailed patterns (content path, portrait keys, README.md filtering, top-level orphaning), preserved all workflow standards	✅ Updated
+Key Additions
+1. README.md
+- File Hierarchy: Updated from 5 components to 16 components
+- Content Management Section: Added clear instructions with the ⚠️ Important: Content Location Constraint warning
+- Troubleshooting Section: Added post-remediation tips for "Content Not Appearing", "Portrait Image Missing", "Build Fails After Content Changes"
+- Content Count Locations: Updated counts (20 collection items, 14 portfolio items, 4 portrait directories)
+2. AGENTS.md
+- verify-content.test.js command: Added to Critical Commands table
+- Lessons Learned section (new):
+- Content Ingestion Gotcha: import.meta.glob relative path requirement
+- Top-level content orphaning: Files outside collections/ / portfolio/ are never ingested
+- Portrait Key Trap: portraitKey must exactly match directory name
+- Collection Definition Sync: collectionDefinitions.slug must match directory name
+3. CLAUDE.md
+- verify-content.test.js command: Added to Build Commands table
+- Lessons Learned section (new):
+- Content Ingestion Path: Detailed explanation of relative path requirement
+- Portrait Key ↔ Directory Name: Visual regression warning
+- PUT_*_HERE.md and README.md Filtering: Why we extended the filter
+- Top-Level Content Orphaning: Common mistake pattern to watch
+Verification
+Check	Result
+pnpm typecheck	✅ 0 errors
+pnpm build	✅ 99 modules, 260KB JS
+node scripts/verify-content.test.js	✅ GREEN
+All documentation now accurately reflects the current codebase state, architectural lessons learned, and practical troubleshooting guidance for future developers.
 
