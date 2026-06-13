@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="2" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 0.05  0 0 0 0 0.05  0 0 0 0 0.07  0 0 0 0.4 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#15151b"/>
+      <stop offset="100%" stop-color="#07080d"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="1600" fill="url(#bg)"/>
+
+  <!-- Visible 28px grid -->
+  <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+    <g>
+      <line x1="0" y1="56" x2="1200" y2="56"/>
+      <line x1="0" y1="112" x2="1200" y2="112"/>
+      <line x1="0" y1="168" x2="1200" y2="168"/>
+      <line x1="0" y1="224" x2="1200" y2="224"/>
+      <line x1="0" y1="280" x2="1200" y2="280"/>
+      <line x1="0" y1="336" x2="1200" y2="336"/>
+      <line x1="0" y1="392" x2="1200" y2="392"/>
+      <line x1="0" y1="448" x2="1200" y2="448"/>
+      <line x1="0" y1="504" x2="1200" y2="504"/>
+      <line x1="0" y1="560" x2="1200" y2="560"/>
+      <line x1="0" y1="616" x2="1200" y2="616"/>
+      <line x1="0" y1="672" x2="1200" y2="672"/>
+      <line x1="0" y1="728" x2="1200" y2="728"/>
+      <line x1="0" y1="784" x2="1200" y2="784"/>
+      <line x1="0" y1="840" x2="1200" y2="840"/>
+      <line x1="0" y1="896" x2="1200" y2="896"/>
+      <line x1="0" y1="952" x2="1200" y2="952"/>
+      <line x1="0" y1="1008" x2="1200" y2="1008"/>
+      <line x1="0" y1="1064" x2="1200" y2="1064"/>
+      <line x1="0" y1="1120" x2="1200" y2="1120"/>
+      <line x1="0" y1="1176" x2="1200" y2="1176"/>
+      <line x1="0" y1="1232" x2="1200" y2="1232"/>
+      <line x1="0" y1="1288" x2="1200" y2="1288"/>
+      <line x1="0" y1="1344" x2="1200" y2="1344"/>
+      <line x1="0" y1="1400" x2="1200" y2="1400"/>
+      <line x1="0" y1="1456" x2="1200" y2="1456"/>
+      <line x1="0" y1="1512" x2="1200" y2="1512"/>
+      <line x1="0" y1="1568" x2="1200" y2="1568"/>
+    </g>
+  </g>
+
+  <!-- Brutalist border frame -->
+  <rect x="56" y="56" width="1088" height="1488" fill="none" stroke="rgba(255,255,255,0.24)" stroke-width="1"/>
+  <rect x="84" y="84" width="1032" height="1432" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1"/>
+
+  <!-- Editorial mark -->
+  <g transform="translate(140, 720)">
+    <text x="0" y="0" font-family="'Cormorant Garamond', Georgia, serif" font-size="280" font-weight="300" fill="rgba(255,255,255,0.95)" letter-spacing="-8">NY</text>
+    <text x="0" y="60" font-family="'IBM Plex Mono', monospace" font-size="16" font-weight="500" fill="rgba(255,255,255,0.5)" letter-spacing="4">PORTRAIT — PLACEHOLDER</text>
+  </g>
+
+  <!-- Bottom annotation -->
+  <g transform="translate(140, 1400)">
+    <line x1="0" y1="0" x2="120" y2="0" stroke="rgba(36,87,255,0.7)" stroke-width="2"/>
+    <text x="0" y="32" font-family="'IBM Plex Mono', monospace" font-size="12" font-weight="500" fill="rgba(255,255,255,0.5)" letter-spacing="3">REPLACE WITH /PUBLIC/NICHOLAS-PORTRAIT.JPG</text>
+  </g>
+
+  <!-- Grain overlay -->
+  <rect width="1200" height="1600" filter="url(#grain)" opacity="0.6"/>
+</svg>
